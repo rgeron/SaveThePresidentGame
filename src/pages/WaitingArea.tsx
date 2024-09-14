@@ -24,9 +24,7 @@ const WaitingArea: React.FC = () => {
 
   const [playerName, setPlayerName] = useState<string>("");
   const [players, setPlayers] = useState<Record<string, Player>>({});
-  const [isReadyButtonVisible, setIsReadyButtonVisible] =
-    useState<boolean>(true);
-    
+
   const isCreator = mode === "create";
 
   useEffect(() => {
@@ -50,7 +48,6 @@ const WaitingArea: React.FC = () => {
 
   const handleNameSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setIsReadyButtonVisible(false);
 
     try {
       const gameRef = doc(db, "games", pin);
@@ -144,55 +141,75 @@ const WaitingArea: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen text-center">
-      <div className="bg-blue-600 flex px-8 items-center justify-center">
-        <h2 className="font-sans italic font-bold text-8xl text-white mb-8">
-          # {pin}
+      {/* Blue Section for PIN Display */}
+      <div className="bg-blue-600 flex items-center justify-center w-full px-8 py-4 cursor-pointer">
+        <h2 className="font-sans italic font-bold text-8xl text-white">
+          #{pin}
         </h2>
       </div>
 
-      {isReadyButtonVisible && (
-        <form onSubmit={handleNameSubmit} className="w-full md:w-2/5">
-          <input
-            type="text"
-            placeholder="Enter your name"
-            value={playerName}
-            onChange={(e) => setPlayerName(e.target.value)}
-            required
-            className="w-full p-3 border border-gray-300 rounded mb-4"
+      <div className="bg-red-600 p-8 rounded-full shadow-md shadow-red-900 mt-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="size-8 text-white"
+        >
+          <path
+            fillRule="evenodd"
+            d="M19.902 4.098a3.75 3.75 0 0 0-5.304 0l-4.5 4.5a3.75 3.75 0 0 0 1.035 6.037.75.75 0 0 1-.646 1.353 5.25 5.25 0 0 1-1.449-8.45l4.5-4.5a5.25 5.25 0 1 1 7.424 7.424l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.757-1.757a3.75 3.75 0 0 0 0-5.304Zm-7.389 4.267a.75.75 0 0 1 1-.353 5.25 5.25 0 0 1 1.449 8.45l-4.5 4.5a5.25 5.25 0 1 1-7.424-7.424l1.757-1.757a.75.75 0 1 1 1.06 1.06l-1.757 1.757a3.75 3.75 0 1 0 5.304 5.304l4.5-4.5a3.75 3.75 0 0 0-1.035-6.037.75.75 0 0 1-.354-1Z"
+            clipRule="evenodd"
           />
-        </form>
-      )}
-
-      <div className="w-full md:w-3/5 mt-8">
-        <h2 className="text-2xl text-gray-800 mb-4">Players:</h2>
-        <ul className="list-none">
-          {Object.entries(players).map(([key, player]) => (
-            <li key={key} className="p-4 bg-white rounded shadow mb-2">
-              {player.name}{" "}
-              {player.team && (
-                <span className="text-gray-600">({player.team})</span>
-              )}
-            </li>
-          ))}
-        </ul>
+        </svg>
       </div>
 
-      {isCreator && (
+      {isCreator ? (
         <>
-          <div className="bg-red-600 mt-8 p-3 w-[70%] mx-auto">
+          {/* Form for Creator to Enter Name */}
+          <form onSubmit={handleNameSubmit} className="w-full md:w-2/5 mt-8">
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
-              className="bg-red-600 text-white text-2xl font-sans italic font-bold border-none outline-none placeholder-opacity-70 w-full text-center"
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded mb-4 text-center"
             />
+          </form>
+
+          {/* List of Players */}
+          <div className="w-full md:w-3/5 mt-8">
+            <h2 className="text-2xl text-gray-800 mb-4">Players:</h2>
+            <ul className="list-none">
+              {Object.entries(players).map(([key, player]) =>
+                key !== playerKey ? (
+                  <li key={key} className="p-4 bg-white rounded shadow mb-2">
+                    {player.name}{" "}
+                    {player.team && (
+                      <span className="text-gray-600">({player.team})</span>
+                    )}
+                  </li>
+                ) : null
+              )}
+            </ul>
           </div>
-
-
 
           <Button color="red" text="Launch" onClick={handleStartGame} />
         </>
+      ) : (
+        <div className="w-full md:w-3/5 mt-8 p-4 bg-blue-500">
+          <h2 className="text-xl text-white font-sans font-bold mb-4">
+            More rules
+          </h2>
+          <div className="text-white font-medium">
+            <p className="">You have to stay in your room.</p>
+            <p className="">You can show your card.</p>
+            <p className="">Respect the timer.</p>
+            <p className="">Have fun.</p>
+            <p className="">No talks during exchanges.</p>
+            <p className="">Always have a leader in the room.</p>
+          </div>
+        </div>
       )}
     </div>
   );
