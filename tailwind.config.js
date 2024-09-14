@@ -4,10 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        Montserrat: ["Montserrat", "sans-serif"],
-      },
-      backgroundImage: {
-        "gradient-bg": "url('assets/gradientbg.png')",
+        zcool: ['"ZCOOL KuaiLe"', "sans-serif"], // Font family with proper quotes
+        sans: ['"Open Sans"', "sans-serif"], // Add Open Sans to your sans font family
       },
     },
   },
