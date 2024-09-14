@@ -1,19 +1,11 @@
-import {
-  doc,
-  getDoc,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { useState } from "react";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebaseConfig";
 
 import Button from "../components/Button";
 
-function HomePage() {
+export default function HomePage() {
   const navigate = useNavigate();
-  const [pin, setPin] = useState<string>("");
 
   const generatePIN = () => {
     return Math.floor(10000 + Math.random() * 90000).toString();
@@ -42,34 +34,13 @@ function HomePage() {
     }
   };
 
-  const pinExists = async (pin: string) => {
+  const handleJoin = () => {
     try {
-      const gameRef = doc(db, "games", pin);
-      const gameDoc = await getDoc(gameRef);
-      return gameDoc.exists() ? gameDoc.data() : null;
+      navigate(`/InputToJoin`, {
+        state: { mode: "join" },
+      });
     } catch (error) {
-      console.error("Error checking PIN existence:", error);
-      return null;
-    }
-  };
-
-  const handleJoinWithPin = async () => {
-    const gameData = await pinExists(pin);
-    if (gameData) {
-      const players = gameData.players || {};
-      const joinerNumber = Object.keys(players).length + 1;
-      const playerKey = `joiner${joinerNumber}`;
-
-      const gameRef = doc(db, "games", pin);
-      await updateDoc(gameRef, {
-        [`players.${playerKey}`]: {}, // Create joiner player immediately
-      });
-
-      navigate(`/waiting/${pin}`, {
-        state: { mode: "join", pin: pin, playerKey },
-      });
-    } else {
-      alert("Invalid PIN");
+      console.error("Error joining the game:", error);
     }
   };
 
@@ -145,10 +116,8 @@ function HomePage() {
       </div>
 
       <div className="mt-10">
-        <Button onClick={handleJoinWithPin} text="JOIN" color="blue" />
+        <Button onClick={handleJoin} text="JOIN" color="blue" />
       </div>
     </div>
   );
 }
-
-export default HomePage;

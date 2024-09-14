@@ -26,6 +26,7 @@ const WaitingArea: React.FC = () => {
   const [players, setPlayers] = useState<Record<string, Player>>({});
   const [isReadyButtonVisible, setIsReadyButtonVisible] =
     useState<boolean>(true);
+    
   const isCreator = mode === "create";
 
   useEffect(() => {
@@ -177,7 +178,21 @@ const WaitingArea: React.FC = () => {
       </div>
 
       {isCreator && (
-        <Button color="red" text="Launch" onClick={handleStartGame} />
+        <>
+          <div className="bg-red-600 mt-8 p-3 w-[70%] mx-auto">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your name"
+              className="bg-red-600 text-white text-2xl font-sans italic font-bold border-none outline-none placeholder-opacity-70 w-full text-center"
+            />
+          </div>
+
+
+
+          <Button color="red" text="Launch" onClick={handleStartGame} />
+        </>
       )}
     </div>
   );
