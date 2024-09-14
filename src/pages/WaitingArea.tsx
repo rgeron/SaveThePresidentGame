@@ -139,6 +139,8 @@ const WaitingArea: React.FC = () => {
     return array;
   };
 
+  const playerCount = Object.keys(players).length + 1; // +1 for the current player
+
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen text-center">
       {/* Blue Section for PIN Display */}
@@ -178,37 +180,47 @@ const WaitingArea: React.FC = () => {
           </form>
 
           {/* List of Players */}
-          <div className="w-full md:w-3/5 mt-8">
-            <h2 className="text-2xl text-gray-800 mb-4">Players:</h2>
-            <ul className="list-none">
-              {Object.entries(players).map(([key, player]) =>
-                key !== playerKey ? (
-                  <li key={key} className="p-4 bg-white rounded shadow mb-2">
-                    {player.name}{" "}
-                    {player.team && (
-                      <span className="text-gray-600">({player.team})</span>
-                    )}
-                  </li>
-                ) : null
-              )}
-            </ul>
+          <div className="w-full md:w-3/5 mt-8 relative">
+            <h2 className="text-2xl text-gray-800 mb-4">
+              {playerCount} people in the game
+            </h2>
+            <div className="h-64 overflow-y-auto bg-white rounded shadow p-4">
+              <ul className="list-none">
+                {Object.entries(players).map(([key, player]) =>
+                  key !== playerKey ? (
+                    <li key={key} className="p-4 bg-white rounded shadow mb-2">
+                      {player.name}{" "}
+                      {player.team && (
+                        <span className="text-gray-600">({player.team})</span>
+                      )}
+                    </li>
+                  ) : null
+                )}
+              </ul>
+            </div>
           </div>
 
           <Button color="red" text="Launch" onClick={handleStartGame} />
         </>
       ) : (
-        <div className="w-full md:w-3/5 mt-8 p-4 bg-blue-500">
-          <h2 className="text-xl text-white font-sans font-bold mb-4">
+        <div className="md:w-3/5 mt-5 p-4 bg-blue-500">
+          <h2 className="text-xl text-white font-sans font-bold mb-4 text-left">
             More rules
           </h2>
-          <div className="text-white font-medium">
-            <p className="">You have to stay in your room.</p>
-            <p className="">You can show your card.</p>
-            <p className="">Respect the timer.</p>
-            <p className="">Have fun.</p>
-            <p className="">No talks during exchanges.</p>
-            <p className="">Always have a leader in the room.</p>
+          <div className="text-white font-medium text-left">
+            <p>You have to stay in your room.</p>
+            <p>You can show your card.</p>
+            <p>Respect the timer.</p>
+            <p>Have fun.</p>
+            <p>No talks during exchanges.</p>
+            <p>Always have a leader in the room.</p>
           </div>
+          <button
+            className="bg-red-600 rounded-full font-sans font-bold text-white p-5"
+            onClick={() => alert("Display full rules")}
+          >
+            Full <br /> rules
+          </button>
         </div>
       )}
     </div>
