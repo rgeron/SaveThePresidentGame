@@ -24,7 +24,7 @@ export default function InputToJoin() {
     const gameData = await pinExists(pin);
     if (gameData) {
       const players = gameData.players || {};
-      const joinerNumber = Object.keys(players).length + 1;
+      const joinerNumber = Object.keys(players).length;
       const playerKey = `joiner${joinerNumber}`;
 
       const gameRef = doc(db, "games", pin);

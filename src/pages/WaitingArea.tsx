@@ -1,5 +1,5 @@
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../firebaseConfig";
 import Button from "../components/Button";
@@ -46,24 +46,14 @@ const WaitingArea: React.FC = () => {
     };
   }, [navigate, pin, playerKey]);
 
-  const handleNameSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    try {
-      const gameRef = doc(db, "games", pin);
-
-      // Update the player's name using the playerKey
-      await updateDoc(gameRef, {
-        [`players.${playerKey}.name`]: playerName,
-      });
-    } catch (error) {
-      console.error("Error updating player name:", error);
-    }
-  };
-
   const handleStartGame = async () => {
     try {
       const gameRef = doc(db, "games", pin);
+
+      await updateDoc(gameRef, {
+        [`players.${playerKey}.name`]: playerName, /// update the name of the creator in the code base
+      });
+
       const gameSnap = await getDoc(gameRef);
       const gameData = gameSnap.data();
 
@@ -139,7 +129,7 @@ const WaitingArea: React.FC = () => {
     return array;
   };
 
-  const playerCount = Object.keys(players).length + 1; // +1 for the current player
+  const playerCount = Object.keys(players).length;
 
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen text-center">
@@ -168,7 +158,7 @@ const WaitingArea: React.FC = () => {
       {isCreator ? (
         <>
           {/* Form for Creator to Enter Name */}
-          <form onSubmit={handleNameSubmit} className="w-full md:w-2/5 mt-8">
+          <form className="w-full md:w-2/5 mt-8">
             <input
               type="text"
               placeholder="Enter your name"
