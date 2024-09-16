@@ -31,7 +31,7 @@ const CountdownComponent: React.FC<CountdownComponentProps> = ({
       return <span className="text-red-600">STOP!</span>;
     } else {
       return (
-        <span className="text-4xl font-bold">
+        <span className="text-4xl font-bold text-white font-sans">
           {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
         </span>
       );
@@ -39,7 +39,7 @@ const CountdownComponent: React.FC<CountdownComponentProps> = ({
   };
 
   return (
-    <div className="text-center text-gray-800">
+    <div className="bg-blue-500">
       <Countdown date={endTime} renderer={renderer} />
     </div>
   );

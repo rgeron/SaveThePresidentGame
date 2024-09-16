@@ -5,7 +5,6 @@ import { db } from '../../firebaseConfig';
 
 import Countdown from '../components/Countdown';
 import Card from '../components/Card';
-import RoomInfo from '../components/RoomInfo';
 
 interface Player {
   Room: number[];
@@ -72,10 +71,6 @@ const Round1: React.FC = () => {
     });
   };
 
-  const playersInSameRoom = Object.values(gameData.players).filter(
-    (player) => player.Room[0] === playerData.Room[0]
-  );
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-blue-100 text-center">
       {showExchange ? (
@@ -107,12 +102,19 @@ const Round1: React.FC = () => {
             </button>
           )}
         </div>
+
       ) : (
         <div>
-          <span className="text-2xl font-bold text-gray-800">ROUND 1</span>
+          <div className='bg-red-600 rounded-full justify-center'>
+            <h1 className='font-sans font-semibold text-white'>Round 1</h1>
+          </div>
           <Countdown onComplete={handleCountdownComplete} duration={10} />
-          <RoomInfo roomNumber={playerData?.Room?.[0]} players={playersInSameRoom} />
           <Card team={playerData?.team} role={playerData?.role} />
+          <div className='bg-blue-200 rounded-t-md'> 
+            <h1 className='text-black text-xl font-sans'>ROOM 1</h1>
+
+          </div>
+
         </div>
       )}
     </div>

@@ -13,6 +13,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Round1 />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/InputToJoin" element={<InputToJoin />} />
         <Route path="/waiting/:pin" element={<WaitingArea />} />
