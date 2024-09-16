@@ -7,7 +7,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ team, role }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(true);
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -15,29 +15,42 @@ const Card: React.FC<CardProps> = ({ team, role }) => {
 
   // Team-based classes for colors
   const isBlueTeam = team === "Blue";
-  const roleClass = isBlueTeam ? "w-1/5 bg-blue-300" : "w-1/5 bg-red-400";
-  const cardFrontClass = isBlueTeam ? "w-4/5 bg-blue-500" : "w-4/5 bg-red-600";
+  const roleClass = isBlueTeam ? "w-1/3 bg-blue-400" : "w-1/3 bg-red-600";
+  const cardFrontClass = isBlueTeam ? "w-4/5 bg-blue-700" : "w-4/5 bg-red-800";
 
   // Circles on the front, with team-based colors
-  const circleColor = isBlueTeam ? "bg-blue-300" : "bg-red-400";
+  const circleColor = isBlueTeam ? "bg-blue-400" : "bg-red-600";
   const cardFrontCircles = (
     <>
       <div
-        className={`absolute top-1/4 left-1/4 w-16 h-16 rounded-full ${circleColor} opacity-50`}
+        className={`absolute top-4 right-5 w-16 h-16 rounded-full ${circleColor}`}
       ></div>
+
       <div
-        className={`absolute bottom-1/3 right-1/4 w-10 h-10 rounded-full ${circleColor} opacity-40`}
+        className={`absolute top-28 left-5 w-6 h-6 rounded-full ${circleColor}`}
+      ></div>
+
+      <div
+        className={`absolute top-32 left-16 w-8 h-8 rounded-full ${circleColor}`}
+      ></div>
+
+      <div
+        className={`absolute bottom-14 left-5 w-10 h-10 rounded-full ${circleColor}`}
+      ></div>
+
+      <div
+        className={`absolute bottom-7 right-5 w-8 h-8 rounded-full ${circleColor}`}
       ></div>
     </>
   );
 
   // Card back with dark grey and lighter grey circles
-  const cardBackClass = "relative bg-gray-800 text-white";
+  const cardBackClass = "relative bg-gray-500 text-white";
   const cardBackCircles = (
     <>
-      <div className="absolute top-1/4 left-1/4 w-20 h-20 rounded-full bg-gray-500 opacity-50"></div>
-      <div className="absolute top-2/3 right-1/4 w-12 h-12 rounded-full bg-gray-600 opacity-40"></div>
-      <div className="absolute bottom-1/4 right-1/3 w-16 h-16 rounded-full bg-gray-400 opacity-30"></div>
+      <div className="absolute top-9 left-1/2 w-20 h-20 rounded-full bg-gray-300 "></div>
+      <div className="absolute top-5 left-9 w-12 h-12 rounded-full bg-gray-300 "></div>
+      <div className="absolute bottom-1/4 right-1/3 w-16 h-16 rounded-full bg-gray-300 "></div>
     </>
   );
 
@@ -50,9 +63,9 @@ const Card: React.FC<CardProps> = ({ team, role }) => {
       >
         {/* Left side with role */}
         <div
-          className={`${roleClass} text-white flex items-center justify-center`}
+          className={`${roleClass} text-white flex font-semibold text-4xl items-center justify-center`}
         >
-          <p className="rotate-90">{role}</p>
+          <p className="-rotate-90 whitespace-nowrap text-ellipsis">{role}</p>
         </div>
 
         {/* Right side with team-based background and circles */}

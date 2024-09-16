@@ -46,6 +46,8 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col items-center justify-start h-screen pt-8">
+      
+
       <div className="bg-red-600 w-full text-center">
         <h1 className="font-zcool text-5xl text-white m-5">
           Save the <br /> president !
