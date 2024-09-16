@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../../firebaseConfig";
 
 import Button from "../components/Button";
+import CountdownComponent from "../components/Countdown";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col items-center justify-start h-screen pt-8">
-      
+      <CountdownComponent onComplete={() => {}} duration={5} />
 
       <div className="bg-red-600 w-full text-center">
         <h1 className="font-zcool text-5xl text-white m-5">

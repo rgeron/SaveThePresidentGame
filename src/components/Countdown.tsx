@@ -28,10 +28,10 @@ const CountdownComponent: React.FC<CountdownComponentProps> = ({
     if (completed) {
       // Call onComplete prop when the countdown finishes
       onComplete();
-      return <span className="text-red-600">STOP!</span>;
+      return <span className="">STOP!</span>;
     } else {
       return (
-        <span className="text-4xl font-bold text-white font-sans">
+        <span className="text-5xl font-medium text-white font-sans">
           {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
         </span>
       );
@@ -39,7 +39,7 @@ const CountdownComponent: React.FC<CountdownComponentProps> = ({
   };
 
   return (
-    <div className="bg-blue-500">
+    <div className="bg-blue-500 justify-center text-center py-5 w-3/5">
       <Countdown date={endTime} renderer={renderer} />
     </div>
   );
