@@ -2,7 +2,6 @@ import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebaseConfig";
-
 import Button from "../components/Button";
 import Card from "../components/Card";
 import NumberExchangeRule from "../components/NumberExchangeRule";
@@ -27,9 +26,7 @@ const Preparation: React.FC = () => {
   const navigate = useNavigate();
 
   const [gameData, setGameData] = useState<GameData | null>(null);
-  const [fixedPlayersInRoom, setFixedPlayersInRoom] = useState<Player[]>([]); // State for fixed players in the same room
-
-  const playerCount = Object.keys(gameData?.players || {}).length;
+  const [fixedPlayersInRoom, setFixedPlayersInRoom] = useState<Player[]>([]);
 
   useEffect(() => {
     const gameRef = doc(db, "games", pin as string);
@@ -45,6 +42,8 @@ const Preparation: React.FC = () => {
             state: { playerKey, playerData: data.players[playerKey], data },
           });
         }
+      } else {
+        console.error("No data found for the game");
       }
     });
 
@@ -57,12 +56,10 @@ const Preparation: React.FC = () => {
       const currentPlayerData = gameData.players[playerKey];
       const currentRoom = currentPlayerData.Room[0];
 
-      // Create a static copy of players in the same room
       const playersInSameRoom = Object.values(gameData.players).filter(
         (player) => player.Room[0] === currentRoom
       );
 
-      // Set the fixed players in room
       setFixedPlayersInRoom(playersInSameRoom);
     }
   }, [gameData, playerKey]);
@@ -86,10 +83,14 @@ const Preparation: React.FC = () => {
   };
 
   if (!gameData) {
-    return <div>Loading game data...</div>;
+    return <div>Loading game data...</div>; // Loading state
   }
 
   const currentPlayerData = gameData.players[playerKey];
+  if (!currentPlayerData) {
+    return <div>Player data not found</div>; // Player not found state
+  }
+
   const { team, role, Room } = currentPlayerData;
   const currentRoom = Room[0]; // Room assignment for round 1
 
@@ -100,12 +101,14 @@ const Preparation: React.FC = () => {
 
       <div className="w-full max-w-xl mt-5 bg-red-600 text-center rounded-xl">
         <h1 className="mt-4 text-3xl font-Montserrat font-bold text-white underline">
-          Rules for {playerCount} players
+          Rules for {Object.keys(gameData.players).length} players
         </h1>
-        <NumberExchangeRule numberOfPlayers={playerCount} />
+        <NumberExchangeRule
+          numberOfPlayers={Object.keys(gameData.players).length}
+        />
       </div>
 
-      <div className=" border border-black m-5 rounded-xl">
+      <div className="border border-black m-5 rounded-xl">
         <h1 className="m-5 text-3xl font-Montserrat font-bold text-black">
           Closely watch your card
         </h1>

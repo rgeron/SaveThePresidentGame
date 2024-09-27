@@ -28,6 +28,16 @@ const WaitingArea: React.FC = () => {
 
   const isCreator = mode === "create";
 
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  const playerCount = Object.keys(players).length;
+
   useEffect(() => {
     const gameRef = doc(db, "games", pin);
 
@@ -52,7 +62,7 @@ const WaitingArea: React.FC = () => {
       const gameRef = doc(db, "games", pin);
 
       await updateDoc(gameRef, {
-        [`players.${playerKey}.name`]: playerName, /// update the name of the creator in the code base
+        [`players.${playerKey}.name`]: playerName, // update the name of the creator in the code base
       });
 
       const gameSnap = await getDoc(gameRef);
@@ -70,18 +80,31 @@ const WaitingArea: React.FC = () => {
         return;
       }
 
-      const half = Math.ceil(numPlayers / 2);
-
-      const shuffledPlayersforRoles = shuffleArray(playersObject);
-      const blueTeam = shuffledPlayersforRoles.slice(0, half);
-      const redTeam = shuffledPlayersforRoles.slice(half);
-
-      const shuffledPlayersforRoom = shuffleArray(playersObject);
-      const Room1 = shuffledPlayersforRoom.slice(0, half);
-      const Room2 = shuffledPlayersforRoom.slice(half);
-
+      const shuffledPlayers = shuffleArray(playersObject);
       const updatedPlayers = { ...gameData.players };
 
+      // If the number of players is odd, assign "Gambler" role
+      let gamblerIndex = -1;
+      if (numPlayers % 2 !== 0) {
+        gamblerIndex = Math.floor(Math.random() * numPlayers); // Randomly select an index for Gambler
+        const [gamblerKey, gambler] = shuffledPlayers.splice(
+          gamblerIndex,
+          1
+        )[0]; // Remove Gambler from players array
+        updatedPlayers[gamblerKey] = {
+          ...gambler,
+          team: "Grey",
+          role: "Gambler",
+          Room: [1, 1, 1, 1], // Assign room for Gambler
+        };
+      }
+
+      // Calculate teams for remaining players
+      const half = Math.floor(shuffledPlayers.length / 2);
+      const blueTeam = shuffledPlayers.slice(0, half);
+      const redTeam = shuffledPlayers.slice(half);
+
+      // Assign roles to blue team
       blueTeam.forEach(([key, player], index) => {
         updatedPlayers[key] = {
           ...player,
@@ -90,6 +113,7 @@ const WaitingArea: React.FC = () => {
         };
       });
 
+      // Assign roles to red team
       redTeam.forEach(([key, player], index) => {
         updatedPlayers[key] = {
           ...player,
@@ -97,6 +121,10 @@ const WaitingArea: React.FC = () => {
           role: index === 0 ? "Bomber" : "Team Member",
         };
       });
+
+      // Update room assignments for both teams
+      const Room1 = blueTeam.concat(redTeam).slice(0, half);
+      const Room2 = blueTeam.concat(redTeam).slice(half);
 
       Room1.forEach(([key, player]) => {
         updatedPlayers[key] = {
@@ -121,16 +149,6 @@ const WaitingArea: React.FC = () => {
       alert("Failed to start the game. Please try again.");
     }
   };
-
-  const shuffleArray = <T,>(array: T[]): T[] => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
-
-  const playerCount = Object.keys(players).length;
 
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen text-center">
