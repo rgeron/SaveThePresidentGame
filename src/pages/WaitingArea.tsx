@@ -94,7 +94,7 @@ const WaitingArea: React.FC = () => {
         updatedPlayers[gamblerKey] = {
           ...gambler,
           team: "Grey",
-          role: "Gambler",
+          role: "The Gambler",
           Room: [1, 1, 1, 1], // Assign room for Gambler
         };
       }
@@ -109,7 +109,7 @@ const WaitingArea: React.FC = () => {
         updatedPlayers[key] = {
           ...player,
           team: "Blue",
-          role: index === 0 ? "President" : "Team Member",
+          role: index === 0 ? "The President" : "Team Member",
         };
       });
 
@@ -118,7 +118,7 @@ const WaitingArea: React.FC = () => {
         updatedPlayers[key] = {
           ...player,
           team: "Red",
-          role: index === 0 ? "Bomber" : "Team Member",
+          role: index === 0 ? "The Bomber" : "Team Member",
         };
       });
 
