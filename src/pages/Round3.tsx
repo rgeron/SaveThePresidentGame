@@ -45,8 +45,6 @@ const Round3: React.FC = () => {
       if (data && data.gameStatus === "results") {
         navigate(`/results/${pin}`, {
           state: {
-            playerKey,
-            playerData: gameData.players[playerKey],
             data: gameData,
           },
         });
@@ -86,8 +84,6 @@ const Round3: React.FC = () => {
     });
     navigate(`/results/${pin}`, {
       state: {
-        playerKey,
-        playerData: gameData.players[playerKey],
         data: gameData,
       },
     });
