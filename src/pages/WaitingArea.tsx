@@ -141,7 +141,7 @@ const WaitingArea: React.FC = () => {
         </h2>
       </div>
 
-      <div className="bg-red-600 p-8 rounded-full shadow-md shadow-red-900 mt-2">
+      <div className="bg-red-600 p-8 rounded-full shadow-md shadow-red-900 mt-14">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -196,7 +196,7 @@ const WaitingArea: React.FC = () => {
           <Button color="red" text="Launch" onClick={handleStartGame} />
         </>
       ) : (
-        <div className="relative md:w-3/5 mt-5 p-6 bg-blue-500 border-r-[2px] border-r-blue-500">
+        <div className="relative md:w-3/5 mt-24 p-6 bg-blue-500 border-r-[2px] border-r-blue-500">
           <h2 className="text-3xl text-white font-sans font-bold mb-4 text-center">
             More rules
           </h2>
