@@ -48,17 +48,17 @@ const Card: React.FC<CardProps> = ({ team, role }) => {
   );
 
   const commonCardClasses =
-    "w-48 h-72 rounded-lg shadow-lg flex cursor-pointer transition-transform duration-300 hover:scale-105";
+    "w-48 h-72 shadow-lg flex cursor-pointer transition-transform duration-3000";
 
   return (
-    <div className="card-container mb-5">
+    <div className="card-container mb-5 " style={{ perspective: "1000px" }}>
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
         {/* Front of the card */}
         <div className={commonCardClasses} onClick={handleFlip}>
           <div
-            className={`${roleClass} text-white flex font-semibold text-4xl items-center justify-center`}
+            className={`${roleClass} text-white flex font-semibold text-4xl items-center justify-center `}
           >
-            <p className="-rotate-90 whitespace-nowrap text-ellipsis">{role}</p>
+            <p className="-rotate-90 whitespace-nowrap">{role}</p>
           </div>
           <div
             className={`${cardFrontClass} relative flex items-center justify-center text-white`}
@@ -75,17 +75,6 @@ const Card: React.FC<CardProps> = ({ team, role }) => {
           {cardBackCircles}
         </div>
       </ReactCardFlip>
-
-      <style jsx>{`
-        .card-container {
-          perspective: 1000px;
-        }
-        .card-container > div {
-          backface-visibility: hidden;
-          transform-style: preserve-3d;
-          transition: transform 0.3s;
-        }
-      `}</style>
     </div>
   );
 };

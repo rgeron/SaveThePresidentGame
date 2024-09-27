@@ -1,25 +1,72 @@
-import React from 'react';
+import React from "react";
 
 interface NumberExchangeRuleProps {
   numberOfPlayers: number;
 }
 
-const NumberExchangeRule: React.FC<NumberExchangeRuleProps> = ({ numberOfPlayers }) => {
-  let rules = '';
+const NumberExchangeRule: React.FC<NumberExchangeRuleProps> = ({
+  numberOfPlayers,
+}) => {
+  const arrowIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="inline w-6 h-6 mx-2"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+      />
+    </svg>
+  );
+
+  let rules: JSX.Element[] = [];
 
   if (numberOfPlayers >= 2 && numberOfPlayers <= 10) {
-    rules = '1 - 1 - 1';
+    rules = [
+      <div key="3min" className="mb-4">
+        3 minutes {arrowIcon} trade 1 hostage/room
+      </div>,
+      <div key="2min" className="mb-4">
+        2 minutes {arrowIcon} trade 1 hostage/room
+      </div>,
+      <div key="1min" className="mb-4">
+        1 minute {arrowIcon} trade 1 hostage/room
+      </div>,
+    ];
   } else if (numberOfPlayers >= 11 && numberOfPlayers <= 21) {
-    rules = '2 - 1 - 1';
+    rules = [
+      <div key="3min" className="mb-4">
+        3 minutes {arrowIcon} trade 2 hostages/room
+      </div>,
+      <div key="2min" className="mb-4">
+        2 minutes {arrowIcon} trade 1 hostage/room
+      </div>,
+      <div key="1min" className="mb-4">
+        1 minute {arrowIcon} trade 1 hostage/room
+      </div>,
+    ];
   } else if (numberOfPlayers > 22) {
-    rules = '3 - 2 - 1';
+    rules = [
+      <div key="3min" className="mb-4">
+        3 minutes {arrowIcon} trade 3 hostages/room
+      </div>,
+      <div key="2min" className="mb-4">
+        2 minutes {arrowIcon} trade 2 hostages/room
+      </div>,
+      <div key="1min" className="mb-4">
+        1 minute {arrowIcon} trade 1 hostage/room
+      </div>,
+    ];
   }
 
   return (
-    <div className="border border-gray-300 rounded-lg bg-gray-50 p-6 my-4 text-center">
-      <h2 className="text-xl font-semibold text-gray-700">
-        Number of hostages per round for {numberOfPlayers} players: <span className="font-bold">{rules}</span>
-      </h2>
+    <div className="text-center p-3">
+      <div className="text-2xl font-bold text-white">{rules}</div>
     </div>
   );
 };
