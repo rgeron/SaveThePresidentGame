@@ -155,7 +155,7 @@ const Round3: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center w-full h-full flex-grow">
+        <div className="flex flex-col items-center w-full h-screen">
           {/* Round 1 Circle */}
           <div className="relative -top-10 w-60 h-60 bg-red-600 rounded-full flex items-center justify-center">
             <h1 className="font-sans font-semibold text-white text-5xl">
@@ -171,9 +171,12 @@ const Round3: React.FC = () => {
             <Card team={playerData?.team} role={playerData?.role} />
           </div>
 
+          {/* Spacer to push content above room number */}
+          <div className="flex-grow"></div>
+
           {/* Room Number at Bottom */}
-          <div className="bg-blue-200 rounded-t-xl w-full flex items-center justify-center">
-            <h1 className="text-black text-5xl font-sans font-semibold">
+          <div className="bg-blue-200 rounded-t-3xl w-full h-1/4 flex items-center justify-center">
+            <h1 className="text-black text-7xl font-sans font-semibold">
               ROOM {playerData?.Room[2]}
             </h1>
           </div>

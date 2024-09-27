@@ -47,8 +47,7 @@ const Card: React.FC<CardProps> = ({ team, role }) => {
     </>
   );
 
-  const commonCardClasses =
-    "w-48 h-72 shadow-lg flex cursor-pointer transition-transform duration-3000";
+  const commonCardClasses = "w-48 h-72 shadow-lg flex cursor-pointer";
 
   return (
     <div className="card-container mb-5 " style={{ perspective: "1000px" }}>

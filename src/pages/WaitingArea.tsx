@@ -141,7 +141,7 @@ const WaitingArea: React.FC = () => {
         </h2>
       </div>
 
-      <div className="bg-red-600 p-8 rounded-full shadow-md shadow-red-900 mt-14">
+      <div className="bg-red-600 p-8 rounded-full shadow-md shadow-red-900 mt-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -176,7 +176,13 @@ const WaitingArea: React.FC = () => {
               {playerCount} people in the game
             </h2>
             <div className="h-64 overflow-y-auto">
-              <div className="grid grid-cols-3 ">
+              <div className="grid grid-cols-3">
+                {/* Hardcoded entry for "You" */}
+                <div className="rounded-lg p-2">
+                  <span className="font-semibold text-xl">You</span>
+                </div>
+
+                {/* Map through existing players */}
                 {Object.entries(players).map(([key, player]) =>
                   key !== playerKey ? (
                     <div key={key} className="rounded-lg p-2">
