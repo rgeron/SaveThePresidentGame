@@ -51,7 +51,7 @@ const Card: React.FC<CardProps> = ({ team, role }) => {
     "w-48 h-72 rounded-lg shadow-lg flex cursor-pointer transition-transform duration-300 hover:scale-105";
 
   return (
-    <div className="card-container">
+    <div className="card-container mb-5">
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
         {/* Front of the card */}
         <div className={commonCardClasses} onClick={handleFlip}>
@@ -83,7 +83,7 @@ const Card: React.FC<CardProps> = ({ team, role }) => {
         .card-container > div {
           backface-visibility: hidden;
           transform-style: preserve-3d;
-          transition: transform 0.6s;
+          transition: transform 0.3s;
         }
       `}</style>
     </div>
