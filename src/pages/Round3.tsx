@@ -160,7 +160,7 @@ const Round3: React.FC = () => {
           </div>
 
           {/* Countdown Timer */}
-          <Countdown onComplete={handleCountdownComplete} duration={3} />
+          <Countdown onComplete={handleCountdownComplete} duration={30} />
 
           {/* Player Card */}
           <div className="mb-10">
