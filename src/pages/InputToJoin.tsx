@@ -53,7 +53,7 @@ export default function InputToJoin() {
           value={pin}
           onChange={(e) => setPin(e.target.value)}
           placeholder=" _ _ _ _ _"
-          className="flex bg-blue-600 text-white text-8xl font-sans italic font-bold border-none outline-none placeholder-opacity-70 w-full text-center"
+          className="flex bg-blue-600 text-white text-8xl font-sans font-bold border-none outline-none  placeholder-white placeholder-opacity-70 w-full text-center"
           onFocus={(e) => (e.target.placeholder = "")}
           onBlur={(e) => (e.target.placeholder = " _ _ _ _ _")}
         />
@@ -66,7 +66,7 @@ export default function InputToJoin() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter your name"
-          className="bg-red-600 text-white text-2xl font-sans italic font-bold border-none outline-none placeholder-opacity-70 w-full text-center"
+          className="bg-red-600 text-white text-2xl font-sans font-bold border-none outline-none placeholder-white placeholder-opacity-50 w-full text-center"
         />
       </div>
 

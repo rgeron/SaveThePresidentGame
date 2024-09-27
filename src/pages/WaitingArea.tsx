@@ -159,35 +159,37 @@ const WaitingArea: React.FC = () => {
       {isCreator ? (
         <>
           {/* Form for Creator to Enter Name */}
-          <form className="w-full md:w-2/5 mt-8">
+          <form className="bg-red-600 mt-8 p-3 w-[60%] mx-auto">
             <input
               type="text"
               placeholder="Enter your name"
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
               required
-              className="w-full p-3 border border-gray-300 rounded mb-4 text-center"
+              className="bg-red-600 text-white text-2xl font-sans font-bold border-none outline-none placeholder-white placeholder-opacity-50 text-center"
             />
           </form>
 
           {/* List of Players */}
-          <div className="w-full md:w-3/5 mt-8 relative">
-            <h2 className="text-2xl text-gray-800 mb-4">
+          <div className="w-full md:w-3/5 mt-8 relative mb-16 bg-blue-100 rounded-3xl p-5">
+            <h2 className="text-4xl font-bold text-black mb-4">
               {playerCount} people in the game
             </h2>
-            <div className="h-64 overflow-y-auto bg-white rounded shadow p-4">
-              <ul className="list-none">
+            <div className="h-64 overflow-y-auto">
+              <div className="grid grid-cols-3 ">
                 {Object.entries(players).map(([key, player]) =>
                   key !== playerKey ? (
-                    <li key={key} className="p-4 bg-white rounded shadow mb-2">
-                      {player.name}{" "}
+                    <div key={key} className="rounded-lg p-2">
+                      <span className="font-semibold text-xl">
+                        {player.name}
+                      </span>{" "}
                       {player.team && (
                         <span className="text-gray-600">({player.team})</span>
                       )}
-                    </li>
+                    </div>
                   ) : null
                 )}
-              </ul>
+              </div>
             </div>
           </div>
 
