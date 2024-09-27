@@ -71,25 +71,27 @@ const RoomInfo: React.FC<RoomInfoProps> = ({ roomNumber, players }) => {
   }, [players]);
 
   return (
-    <div className="text-center p-4 m-3 bg-blue-600 bg-opacity-80 shadow-lg h-64 w-4/5 rounded-xl">
-      <h2 className=" relative mb-2 text-3xl font-Montserrat font-bold text-white">
-        You are in <span className="text-5xl">ROOM {roomNumber}</span> with
+    <div className="flex flex-col w-full text-center items-center">
+      <h2 className=" relative text-5xl font-Montserrat font-bold text-black underline">
+        ROOM {roomNumber}
       </h2>
-      <div className="relative h-3/4">
-        {/* Ensure this div takes up remaining space */}
-        {players.map((player, index) => (
-          <div
-            key={index}
-            className="absolute text-white text-xl font-Montserrat font-bold transition-transform transform hover:scale-110 p-3"
-            style={{
-              top: `${positions[index]?.top || 0}%`,
-              left: `${positions[index]?.left || 0}%`,
-              transition: "top 0.05s linear, left 0.05s linear", // Smooth movement
-            }}
-          >
-            {player.name}
-          </div>
-        ))}
+      <div className="p-2 m-3 bg-blue-600 bg-opacity-80 h-48 w-4/5 rounded-xl ">
+        <div className="relative h-full">
+          {/* Ensure this div takes up remaining space */}
+          {players.map((player, index) => (
+            <div
+              key={index}
+              className="absolute text-white text-xl font-Montserrat font-bold transition-transform transform hover:scale-110 p-3"
+              style={{
+                top: `${positions[index]?.top || 0}%`,
+                left: `${positions[index]?.left || 0}%`,
+                transition: "top 0.05s linear, left 0.05s linear", // Smooth movement
+              }}
+            >
+              {player.name}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

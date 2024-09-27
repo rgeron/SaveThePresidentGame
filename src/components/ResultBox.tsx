@@ -18,8 +18,8 @@ const ResultBox: React.FC<ResultBoxProps> = ({ gameData, state, text }) => {
 
   const getPlayerClassName = (player: Player) => {
     let className = player.team === "Red" ? "bg-red-500" : "bg-blue-500";
-    if (player.role === "President" || player.role === "Bomber") {
-      className += " border-8 border-yellow-300"; // Thicker border for key roles
+    if (player.role === "The President" || player.role === "The Bomber") {
+      className += " border-4 border-black"; // Thicker border for key roles
     }
     return className;
   };

@@ -21,6 +21,11 @@ export default function InputToJoin() {
   };
 
   const handleJoinWithPin = async () => {
+    if (name.trim() === "") {
+      alert("Please enter your name before starting the game.");
+      return;
+    }
+
     const gameData = await pinExists(pin);
     if (gameData) {
       const players = gameData.players || {};

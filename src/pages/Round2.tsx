@@ -141,7 +141,7 @@ const Round2: React.FC = () => {
                 {playerKey === "creator" && (
                   <Button
                     onClick={startRound3}
-                    text="See results"
+                    text="Start Round 3"
                     color="green"
                   />
                 )}

@@ -95,7 +95,7 @@ const Preparation: React.FC = () => {
   const currentRoom = Room[0]; // Room assignment for round 1
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 bg-gradient-bg mt-10">
+    <div className="flex flex-col items-center justify-center p-6 bg-gradient-bg mt-3">
       {/* Pass the fixed players to the RoomInfo component */}
       <RoomInfo roomNumber={currentRoom} players={fixedPlayersInRoom} />
 
@@ -108,8 +108,8 @@ const Preparation: React.FC = () => {
         />
       </div>
 
-      <div className="border border-black m-5 rounded-xl">
-        <h1 className="m-5 text-3xl font-Montserrat font-bold text-black">
+      <div className=" m-3 rounded-xl underline">
+        <h1 className="m-3 text-3xl font-Montserrat font-bold text-black">
           Closely watch your card
         </h1>
       </div>

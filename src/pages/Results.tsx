@@ -26,10 +26,10 @@ const Results: React.FC = () => {
 
   // Find the bomber and president players
   const bomber = Object.values(gameData.players).find(
-    (player) => player.role === "Bomber"
+    (player) => player.role === "The Bomber"
   );
   const president = Object.values(gameData.players).find(
-    (player) => player.role === "President"
+    (player) => player.role === "The President"
   );
 
   // Get their room numbers in the final state (round 3)
