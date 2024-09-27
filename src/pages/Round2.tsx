@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { doc, updateDoc, onSnapshot } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { db } from "../../firebaseConfig";
 
-import Countdown from '../components/Countdown';
-import Card from '../components/Card';
-import RoomInfo from '../components/RoomInfo';
+import Button from "../components/Button";
+import Card from "../components/Card";
+import Countdown from "../components/Countdown";
 
 interface Player {
   Room: number[];
@@ -20,47 +20,51 @@ interface GameData {
 
 interface LocationState {
   playerKey: string;
+  playerData: Player;
+  data: GameData;
 }
 
 const Round2: React.FC = () => {
   const { pin } = useParams<{ pin: string }>();
   const location = useLocation();
-  const { playerKey } = location.state as LocationState;
+  const {
+    playerKey,
+    playerData,
+    data: gameData,
+  } = location.state as LocationState;
   const navigate = useNavigate();
 
-  const [showExchange, setShowExchange] = useState(false);
-  const [playerData, setPlayerData] = useState<Player | null>(null);
-  const [gameData, setGameData] = useState<GameData | null>(null);
   const [questionVisible, setQuestionVisible] = useState(true);
+  const [pause, setPause] = useState(false);
 
   useEffect(() => {
-    const gameRef = doc(db, 'games', pin!);
+    const gameRef = doc(db, "games", pin!);
 
     const unsubscribe = onSnapshot(gameRef, (snapshot) => {
-      const data = snapshot.data() as GameData;
-      if (data) {
-        setGameData(data);
-        if (data.players && data.players[playerKey]) {
-          setPlayerData(data.players[playerKey]);
-        }
-        if (data.gameStatus === 'round3') {
-          navigate(`/round3/${pin}`, { state: { playerKey } });
-        }
+      const data = snapshot.data();
+      if (data && data.gameStatus === "round3") {
+        navigate(`/round3/${pin}`, {
+          state: {
+            playerKey,
+            playerData: gameData.players[playerKey],
+            data: gameData,
+          },
+        });
       }
     });
 
     return () => unsubscribe();
-  }, [pin, playerKey, navigate]);
+  }, [gameData, pin, playerKey, navigate]);
 
   const handleCountdownComplete = () => {
-    setShowExchange(true);
+    setPause(true);
   };
 
   const handleExchange = async (exchanged: boolean) => {
     setQuestionVisible(false);
     if (exchanged && playerData) {
       const newRoom = playerData.Room[2] === 1 ? 2 : 1;
-      const gameRef = doc(db, 'games', pin!);
+      const gameRef = doc(db, "games", pin!);
       const updatedPlayerData = {
         ...playerData,
         Room: [playerData.Room[0], playerData.Room[1], newRoom, newRoom],
@@ -72,58 +76,102 @@ const Round2: React.FC = () => {
   };
 
   const startRound3 = async () => {
-    await updateDoc(doc(db, 'games', pin!), {
-      gameStatus: 'round3',
+    await updateDoc(doc(db, "games", pin!), {
+      gameStatus: "round3",
     });
-    navigate(`/round3/${pin}`, { state: { playerKey } });
+    navigate(`/round3/${pin}`, {
+      state: {
+        playerKey,
+        playerData: gameData.players[playerKey],
+        data: gameData,
+      },
+    });
   };
 
-  const playersInSameRoom = gameData?.players
-    ? Object.values(gameData.players).filter(
-        (player) => player.Room[1] === playerData?.Room[1]
-      )
-    : [];
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-100 text-center">
-      {showExchange ? (
-        <div className="flex flex-col items-center justify-center">
-          <h1 className="text-4xl mb-6 text-gray-800">NO MORE TALK</h1>
-          {questionVisible && (
-            <div className="mb-4">
-              <p className="text-xl mb-4">Are you traded?</p>
-              <button
-                onClick={() => handleExchange(true)}
-                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 mr-2"
-              >
-                YES
-              </button>
-              <button
-                onClick={() => handleExchange(false)}
-                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
-              >
-                NO
-              </button>
-            </div>
-          )}
-          {playerKey === 'creator' && (
-            <button
-              onClick={startRound3}
-              className="mt-4 bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700"
-            >
-              Start Round 3
-            </button>
-          )}
+    <div className="flex flex-col min-h-screen">
+      {pause ? (
+        <div className="bg-blue-50 flex flex-col justify-evenly items-center w-full h-screen relative">
+          {/* Absolute Elements Container */}
+          <div className="flex justify-center items-center">
+            {/* Circles */}
+            <div className="absolute left-7 top-24 w-20 h-20 bg-blue-500 rounded-full"></div>
+            <div className="absolute -right-14 top-12 w-32 h-32 bg-red-700 rounded-full"></div>
+            <div className="absolute left-1/3 top-14 w-14 h-14 bg-blue-300 rounded-full"></div>
+          </div>
+
+          <div className="flex-col items-center justify-center flex-grow w-full">
+            {questionVisible ? (
+              <div className="text-center w-full">
+                {/* Vertical Bar */}
+                <div className="absolute bottom-0 left-1/2 bg-gray-400 h-1/2 w-5"></div>
+
+                {/* Question */}
+                <div className="mt-60">
+                  <p className="text-5xl mb-4 font-semibold">Are you being</p>
+                  <p className="text-5xl mb-4 font-semibold">exchanged?</p>
+                </div>
+
+                {/* Buttons */}
+                <div className="flex w-full mt-72">
+                  <div className="flex-grow">
+                    <button
+                      onClick={() => handleExchange(true)}
+                      className="flex-grow text-black py-4 text-4xl font-bold"
+                    >
+                      YES
+                    </button>
+                  </div>
+
+                  <div className="flex-grow flex justify-center">
+                    <button
+                      onClick={() => handleExchange(false)}
+                      className="flex-grow text-black py-4 text-4xl font-bold"
+                    >
+                      NO
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center mt-72">
+                <p className="text-6xl font-zcool">NO</p>
+                <p className="text-6xl font-zcool">MORE</p>
+                <p className="text-6xl font-zcool mb-24">TALK</p>
+                {playerKey === "creator" && (
+                  <Button
+                    onClick={startRound3}
+                    text="Start Round 3"
+                    color="green"
+                  />
+                )}
+              </div>
+            )}
+          </div>
         </div>
       ) : (
-        <div>
-          <span className="text-2xl font-bold text-gray-800">ROUND 2</span>
+        <div className="flex flex-col items-center w-full h-full flex-grow">
+          {/* Round 1 Circle */}
+          <div className="relative -top-10 w-60 h-60 bg-red-600 rounded-full flex items-center justify-center">
+            <h1 className="font-sans font-semibold text-white text-5xl">
+              Round 2
+            </h1>
+          </div>
+
+          {/* Countdown Timer */}
           <Countdown onComplete={handleCountdownComplete} duration={10} />
-          <RoomInfo
-            roomNumber={playerData?.Room?.[1]}
-            players={playersInSameRoom}
-          />
-          <Card team={playerData?.team} role={playerData?.role} />
+
+          {/* Player Card */}
+          <div className="mb-10">
+            <Card team={playerData?.team} role={playerData?.role} />
+          </div>
+
+          {/* Room Number at Bottom */}
+          <div className="bg-blue-200 rounded-t-xl w-full flex items-center justify-center">
+            <h1 className="text-black text-5xl font-sans font-semibold">
+              ROOM {playerData?.Room[1]}
+            </h1>
+          </div>
         </div>
       )}
     </div>

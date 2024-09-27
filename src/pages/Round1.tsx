@@ -43,7 +43,13 @@ const Round1: React.FC = () => {
     const unsubscribe = onSnapshot(gameRef, (snapshot) => {
       const data = snapshot.data();
       if (data && data.gameStatus === "round2") {
-        navigate(`/round2/${pin}`, { state: { playerKey } });
+        navigate(`/round2/${pin}`, {
+          state: {
+            playerKey,
+            playerData: gameData.players[playerKey],
+            data: gameData,
+          },
+        });
       }
     });
 
@@ -73,6 +79,13 @@ const Round1: React.FC = () => {
     const gameRef = doc(db, "games", pin!);
     await updateDoc(gameRef, {
       gameStatus: "round2",
+    });
+    navigate(`/round2/${pin}`, {
+      state: {
+        playerKey,
+        playerData: gameData.players[playerKey],
+        data: gameData,
+      },
     });
   };
 
@@ -147,7 +160,7 @@ const Round1: React.FC = () => {
           </div>
 
           {/* Countdown Timer */}
-          <Countdown onComplete={handleCountdownComplete} duration={1} />
+          <Countdown onComplete={handleCountdownComplete} duration={3} />
 
           {/* Player Card */}
           <div className="mb-10">
