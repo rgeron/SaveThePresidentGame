@@ -49,25 +49,30 @@ const Results: React.FC = () => {
     if (bomberRoom === presidentRoom) {
       return {
         winner: "Red",
-        resultText: "Bomber and President are in the same room. Red Team wins!",
+        resultText: "Red Team wins!",
       };
     } else {
       return {
         winner: "Blue",
-        resultText:
-          "Bomber and President are in different rooms. Blue Team wins!",
+        resultText: "Blue Team wins!",
       };
     }
   };
 
-  const { winner, resultText } = determineWinner(gameData.players);
+  const { winner, resultText } = determineWinner();
+
+  // Set the background color based on the winner
+  const backgroundColor =
+    winner === "Blue"
+      ? "bg-blue-600"
+      : winner === "Red"
+      ? "bg-red-700"
+      : "bg-gray-50";
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-center text-2xl font-bold mb-6">Game Results</h1>
-
-      <div className="text-center bg-gray-200 p-4 rounded-lg mb-6">
-        <h2 className="text-lg font-semibold text-gray-800">{resultText}</h2>
+    <div className={` p-6 min-h-screen ${backgroundColor} text-center`}>
+      <div className="text-center p-4 rounded-lg mb-6">
+        <h2 className="text-5xl text-white font-zcool">{resultText}</h2>
       </div>
 
       {/* Result boxes for each stage of the game */}
@@ -76,7 +81,7 @@ const Results: React.FC = () => {
       <ResultBox gameData={gameData} state={2} text="After Round 2" />
       <ResultBox gameData={gameData} state={3} text="Final State" />
 
-      <Button onClick={() => navigate("/")} text="End game" color="red" />
+      <Button onClick={() => navigate("/")} text="END GAME" color="red" />
     </div>
   );
 };
