@@ -196,7 +196,7 @@ const WaitingArea: React.FC = () => {
           <Button color="red" text="Launch" onClick={handleStartGame} />
         </>
       ) : (
-        <div className="relative md:w-3/5 mt-5 p-6 bg-blue-500 border-r-[24px] border-r-white">
+        <div className="relative md:w-3/5 mt-5 p-6 bg-blue-500 border-r-[2px] border-r-blue-500">
           <h2 className="text-3xl text-white font-sans font-bold mb-4 text-center">
             More rules
           </h2>
