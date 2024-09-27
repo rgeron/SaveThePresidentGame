@@ -58,6 +58,11 @@ const WaitingArea: React.FC = () => {
   }, [navigate, pin, playerKey]);
 
   const handleStartGame = async () => {
+    if (playerName.trim() === "") {
+      alert("Please enter your name before starting the game.");
+      return;
+    }
+
     try {
       const gameRef = doc(db, "games", pin);
 
