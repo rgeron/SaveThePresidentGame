@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import ResultBox from "../components/ResultBox";
 
@@ -20,41 +20,54 @@ interface LocationState {
 }
 
 const Results: React.FC = () => {
-  const { pin } = useParams<{ pin: string }>();
   const location = useLocation();
   const { data: gameData } = location.state as LocationState;
   const navigate = useNavigate();
 
-  const determineWinner = () => {
-    const bomber = Object.values(gameData.players).find(
-      (player) => player.role === "Bomber"
-    );
-    const president = Object.values(gameData.players).find(
-      (player) => player.role === "President"
-    );
+  // Find the bomber and president players
+  const bomber = Object.values(gameData.players).find(
+    (player) => player.role === "Bomber"
+  );
+  const president = Object.values(gameData.players).find(
+    (player) => player.role === "President"
+  );
 
+  // Get their room numbers in the final state (round 3)
+  const bomberRoom = bomber?.Room[3];
+  const presidentRoom = president?.Room[3];
+
+  // Determine the winner based on their final rooms
+  const determineWinner = () => {
     if (!bomber || !president) {
-      return "Unable to determine winner";
+      return {
+        winner: "Error",
+        resultText:
+          "Unable to determine winner: Bomber or President is missing.",
+      };
     }
 
-    const bomberRoom = bomber.Room[3]; // Final state (Round 3)
-    const presidentRoom = president.Room[3];
-
     if (bomberRoom === presidentRoom) {
-      return bomberRoom === 1 ? "Red Team Wins" : "Blue Team Wins";
+      return {
+        winner: "Red",
+        resultText: "Bomber and President are in the same room. Red Team wins!",
+      };
     } else {
-      return "No team wins";
+      return {
+        winner: "Blue",
+        resultText:
+          "Bomber and President are in different rooms. Blue Team wins!",
+      };
     }
   };
 
-  const winner = determineWinner();
+  const { winner, resultText } = determineWinner(gameData.players);
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <h1 className="text-center text-2xl font-bold mb-6">Game Results</h1>
 
       <div className="text-center bg-gray-200 p-4 rounded-lg mb-6">
-        <h2 className="text-lg font-semibold text-gray-800">{winner}</h2>
+        <h2 className="text-lg font-semibold text-gray-800">{resultText}</h2>
       </div>
 
       {/* Result boxes for each stage of the game */}
@@ -63,7 +76,7 @@ const Results: React.FC = () => {
       <ResultBox gameData={gameData} state={2} text="After Round 2" />
       <ResultBox gameData={gameData} state={3} text="Final State" />
 
-      <Button onClick={() => navigate("/")} text="End Game" color="red" />
+      <Button onClick={() => navigate("/")} text="End game" color="red" />
     </div>
   );
 };
