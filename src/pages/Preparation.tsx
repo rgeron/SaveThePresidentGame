@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebaseConfig";
 
+import Button from "../components/Button";
 import Card from "../components/Card";
 import NumberExchangeRule from "../components/NumberExchangeRule";
 import RoomInfo from "../components/RoomInfo";
@@ -105,12 +106,7 @@ const Preparation: React.FC = () => {
       <Card team={team} role={role} />
 
       {playerKey === "creator" && (
-        <button
-          onClick={handleStartRound}
-          className="mt-6 bg-red-500 text-white py-3 px-6 rounded-lg text-lg font-medium hover:bg-red-600 transition-colors"
-        >
-          Start Round 1
-        </button>
+        <Button onClick={handleStartRound} color="red" text="Start Round 1" />
       )}
     </div>
   );

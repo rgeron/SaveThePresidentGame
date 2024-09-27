@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../firebaseConfig";
 import Button from "../components/Button";
+import CircularButton from "../components/CircularButton";
 
 interface Player {
   name: string;
@@ -193,24 +194,20 @@ const WaitingArea: React.FC = () => {
           <Button color="red" text="Launch" onClick={handleStartGame} />
         </>
       ) : (
-        <div className="md:w-3/5 mt-5 p-4 bg-blue-500">
-          <h2 className="text-xl text-white font-sans font-bold mb-4 text-left">
+        <div className="relative md:w-3/5 mt-5 p-6 bg-blue-500 border-r-[24px] border-r-white">
+          <h2 className="text-3xl text-white font-sans font-bold mb-4 text-center">
             More rules
           </h2>
-          <div className="text-white font-medium text-left">
-            <p>You have to stay in your room.</p>
-            <p>You can show your card.</p>
-            <p>Respect the timer.</p>
-            <p>Have fun.</p>
-            <p>No talks during exchanges.</p>
-            <p>Always have a leader in the room.</p>
+          <div className="text-white font-medium text-left text-xl">
+            <p className="pt-2">You have to stay in your room.</p>
+            <p className="pt-2">You can show your card.</p>
+            <p className="pt-2">Respect the timer.</p>
+            <p className="pt-2">Have fun.</p>
+            <p className="pt-2">No talks during exchanges.</p>
+            <p className="pt-2">Always have a leader in the room.</p>
           </div>
-          <button
-            className="bg-red-600 rounded-full font-sans font-bold text-white p-5"
-            onClick={() => alert("Display full rules")}
-          >
-            Full <br /> rules
-          </button>
+
+          <CircularButton />
         </div>
       )}
     </div>

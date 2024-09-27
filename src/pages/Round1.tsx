@@ -108,7 +108,7 @@ const Round1: React.FC = () => {
           <div className='bg-red-600 rounded-full justify-center'>
             <h1 className='font-sans font-semibold text-white'>Round 1</h1>
           </div>
-          <Countdown onComplete={handleCountdownComplete} duration={10} />
+          <Countdown onComplete={handleCountdownComplete} duration={1000} />
           <Card team={playerData?.team} role={playerData?.role} />
           <div className='bg-blue-200 rounded-t-md'> 
             <h1 className='text-black text-xl font-sans'>ROOM 1</h1>
