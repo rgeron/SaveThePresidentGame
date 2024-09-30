@@ -123,7 +123,7 @@ const Round1: React.FC = () => {
                 <div className="absolute bottom-0 left-1/2 bg-gray-400 h-1/2 w-5"></div>
 
                 {/* Question */}
-                <div className="mt-40">
+                <div className="mt-56">
                   <p className="text-5xl mb-4 font-semibold">Are you being</p>
                   <p className="text-5xl mb-4 font-semibold">exchanged?</p>
                 </div>
@@ -168,8 +168,8 @@ const Round1: React.FC = () => {
       ) : (
         <div className="flex flex-col items-center w-full h-screen">
           {/* Round 1 Circle */}
-          <div className="relative -top-14 w-52 h-52 bg-red-600 rounded-full flex items-end justify-center">
-            <h1 className="font-sans font-semibold text-white text-4xl mb-3">
+          <div className="relative -top-14 w-52 h-52 bg-red-600 rounded-full flex items-center justify-center">
+            <h1 className="font-sans font-semibold text-white text-4xl">
               Round 1
             </h1>
           </div>
@@ -186,8 +186,8 @@ const Round1: React.FC = () => {
           <div className="flex-grow"></div>
 
           {/* Room Number at Bottom */}
-          <div className="bg-blue-200 rounded-t-3xl w-full h-1/3 flex items-center justify-center">
-            <h1 className="text-black text-6xl font-sans font-semibold">
+          <div className="bg-blue-200 rounded-t-3xl w-full h-1/4 flex items-start justify-center">
+            <h1 className="text-black text-6xl font-sans font-semibold mt-4">
               ROOM {playerLatestData?.Room[0]}
             </h1>
           </div>
