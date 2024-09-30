@@ -37,6 +37,10 @@ const Round2: React.FC = () => {
   const [questionVisible, setQuestionVisible] = useState(true);
   const [pause, setPause] = useState(false);
 
+  // Add new useState for latestData and playerLatestData
+  const [latestData, setLatestData] = useState<GameData>(gameData);
+  const [playerLatestData, setPlayerLatestData] = useState<Player>(playerData);
+
   useEffect(() => {
     const gameRef = doc(db, "games", pin!);
 
@@ -46,6 +50,10 @@ const Round2: React.FC = () => {
         // Fetch the latest game data
         const latestSnapshot = await getDoc(gameRef);
         const latestData = latestSnapshot.data() as GameData;
+
+        // Update the latest game data and player data
+        setLatestData(latestData);
+        setPlayerLatestData(latestData.players[playerKey]);
 
         navigate(`/round3/${pin}`, {
           state: {
@@ -66,12 +74,17 @@ const Round2: React.FC = () => {
 
   const handleExchange = async (exchanged: boolean) => {
     setQuestionVisible(false);
-    if (exchanged && playerData) {
+    if (exchanged) {
       const newRoom = playerData.Room[2] === 1 ? 2 : 1;
       const gameRef = doc(db, "games", pin!);
       const updatedPlayerData = {
-        ...playerData,
-        Room: [playerData.Room[0], playerData.Room[1], newRoom, newRoom],
+        ...playerLatestData,
+        Room: [
+          playerLatestData.Room[0],
+          playerLatestData.Room[1],
+          newRoom,
+          newRoom,
+        ],
       };
       await updateDoc(gameRef, {
         [`players.${playerKey}`]: updatedPlayerData,
@@ -80,14 +93,15 @@ const Round2: React.FC = () => {
   };
 
   const startRound3 = async () => {
-    await updateDoc(doc(db, "games", pin!), {
+    const gameRef = doc(db, "games", pin!);
+    await updateDoc(gameRef, {
       gameStatus: "round3",
     });
     navigate(`/round3/${pin}`, {
       state: {
         playerKey,
-        playerData: gameData.players[playerKey],
-        data: gameData,
+        playerData: playerLatestData,
+        data: latestData,
       },
     });
   };
@@ -167,7 +181,7 @@ const Round2: React.FC = () => {
 
           {/* Player Card */}
           <div className="mb-10">
-            <Card team={playerData?.team} role={playerData?.role} />
+            <Card team={playerLatestData?.team} role={playerLatestData?.role} />
           </div>
 
           {/* Spacer to push content above room number */}
@@ -176,7 +190,7 @@ const Round2: React.FC = () => {
           {/* Room Number at Bottom */}
           <div className="bg-blue-200 rounded-t-3xl w-full h-1/4 flex items-center justify-center">
             <h1 className="text-black text-7xl font-sans font-semibold">
-              ROOM {playerData?.Room[0]}
+              ROOM {playerLatestData?.Room[0]}
             </h1>
           </div>
         </div>

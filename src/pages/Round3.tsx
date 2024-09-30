@@ -34,6 +34,10 @@ const Round3: React.FC = () => {
   } = location.state as LocationState;
   const navigate = useNavigate();
 
+  // State for the latest data and player data
+  const [latestData, setLatestData] = useState<GameData>(gameData);
+  const [playerLatestData, setPlayerLatestData] = useState<Player>(playerData);
+
   const [questionVisible, setQuestionVisible] = useState(true);
   const [pause, setPause] = useState(false);
 
@@ -46,6 +50,12 @@ const Round3: React.FC = () => {
         // Fetch the latest game data
         const latestSnapshot = await getDoc(gameRef);
         const latestData = latestSnapshot.data() as GameData;
+
+        // Update state with the latest game and player data
+        setLatestData(latestData);
+        setPlayerLatestData(latestData.players[playerKey]);
+
+        // Navigate to results with the latest data
         navigate(`/results/${pin}`, {
           state: {
             playerKey,
@@ -57,7 +67,7 @@ const Round3: React.FC = () => {
     });
 
     return () => unsubscribe();
-  }, [gameData, pin, playerKey, navigate]);
+  }, [pin, playerKey, navigate]);
 
   const handleCountdownComplete = () => {
     setPause(true);
@@ -65,15 +75,15 @@ const Round3: React.FC = () => {
 
   const handleExchange = async (exchanged: boolean) => {
     setQuestionVisible(false);
-    if (exchanged && playerData) {
-      const newRoom = playerData.Room[3] === 1 ? 2 : 1;
+    if (exchanged && playerLatestData) {
+      const newRoom = playerLatestData.Room[3] === 1 ? 2 : 1;
       const gameRef = doc(db, "games", pin!);
       const updatedPlayerData = {
-        ...playerData,
+        ...playerLatestData,
         Room: [
-          playerData.Room[0],
-          playerData.Room[1],
-          playerData.Room[2],
+          playerLatestData.Room[0],
+          playerLatestData.Room[1],
+          playerLatestData.Room[2],
           newRoom,
         ],
       };
@@ -89,7 +99,7 @@ const Round3: React.FC = () => {
     });
     navigate(`/results/${pin}`, {
       state: {
-        data: gameData,
+        data: latestData, // Pass the latest game data
       },
     });
   };
@@ -169,7 +179,7 @@ const Round3: React.FC = () => {
 
           {/* Player Card */}
           <div className="mb-10">
-            <Card team={playerData?.team} role={playerData?.role} />
+            <Card team={playerLatestData?.team} role={playerLatestData?.role} />
           </div>
 
           {/* Spacer to push content above room number */}
@@ -178,7 +188,7 @@ const Round3: React.FC = () => {
           {/* Room Number at Bottom */}
           <div className="bg-blue-200 rounded-t-3xl w-full h-1/4 flex items-center justify-center">
             <h1 className="text-black text-7xl font-sans font-semibold">
-              ROOM {playerData?.Room[2]}
+              ROOM {playerLatestData?.Room[2]}
             </h1>
           </div>
         </div>
