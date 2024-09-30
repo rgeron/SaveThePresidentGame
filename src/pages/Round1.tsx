@@ -105,7 +105,7 @@ const Round1: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="bg-blue-50 flex flex-col min-h-screen">
       {pause ? (
         <div className="bg-blue-50 flex flex-col justify-evenly items-center w-full h-screen relative">
           {/* Absolute Elements Container */}
@@ -123,13 +123,13 @@ const Round1: React.FC = () => {
                 <div className="absolute bottom-0 left-1/2 bg-gray-400 h-1/2 w-5"></div>
 
                 {/* Question */}
-                <div className="mt-60">
+                <div className="mt-40">
                   <p className="text-5xl mb-4 font-semibold">Are you being</p>
                   <p className="text-5xl mb-4 font-semibold">exchanged?</p>
                 </div>
 
                 {/* Buttons */}
-                <div className="flex w-full mt-72">
+                <div className="flex w-full mt-32">
                   <div className="flex-grow">
                     <button
                       onClick={() => handleExchange(true)}
@@ -150,7 +150,7 @@ const Round1: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="text-center mt-72">
+              <div className="text-center mt-40">
                 <p className="text-6xl font-zcool">NO</p>
                 <p className="text-6xl font-zcool">MORE</p>
                 <p className="text-6xl font-zcool mb-24">TALK</p>
@@ -168,8 +168,8 @@ const Round1: React.FC = () => {
       ) : (
         <div className="flex flex-col items-center w-full h-screen">
           {/* Round 1 Circle */}
-          <div className="relative -top-10 w-60 h-60 bg-red-600 rounded-full flex items-center justify-center">
-            <h1 className="font-sans font-semibold text-white text-5xl">
+          <div className="relative -top-14 w-52 h-52 bg-red-600 rounded-full flex items-end justify-center">
+            <h1 className="font-sans font-semibold text-white text-4xl mb-3">
               Round 1
             </h1>
           </div>
@@ -178,7 +178,7 @@ const Round1: React.FC = () => {
           <Countdown onComplete={handleCountdownComplete} duration={180} />
 
           {/* Player Card */}
-          <div className="mb-10">
+          <div className="mb-5">
             <Card team={playerLatestData?.team} role={playerLatestData?.role} />
           </div>
 
@@ -186,8 +186,8 @@ const Round1: React.FC = () => {
           <div className="flex-grow"></div>
 
           {/* Room Number at Bottom */}
-          <div className="bg-blue-200 rounded-t-3xl w-full h-1/4 flex items-center justify-center">
-            <h1 className="text-black text-7xl font-sans font-semibold">
+          <div className="bg-blue-200 rounded-t-3xl w-full h-1/3 flex items-center justify-center">
+            <h1 className="text-black text-6xl font-sans font-semibold">
               ROOM {playerLatestData?.Room[0]}
             </h1>
           </div>

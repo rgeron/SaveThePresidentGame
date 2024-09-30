@@ -179,7 +179,7 @@ const WaitingArea: React.FC = () => {
       {isCreator ? (
         <>
           {/* Form for Creator to Enter Name */}
-          <form className="bg-red-600 mt-8 p-3 w-[60%] mx-auto">
+          <form className="bg-red-600 mt-8 p-3 w-[70%] mx-auto">
             <input
               type="text"
               placeholder="Enter your name"
@@ -191,12 +191,12 @@ const WaitingArea: React.FC = () => {
           </form>
 
           {/* List of Players */}
-          <div className="w-full md:w-3/5 mt-8 relative mb-16 bg-blue-100 rounded-3xl p-5">
+          <div className="w-full md:w-3/5 mt-8 relative mb-8 bg-blue-100 rounded-3xl p-5">
             <h2 className="text-4xl font-bold text-black mb-4">
               {playerCount} people in the game
             </h2>
             <div className="h-64 overflow-y-auto">
-              <div className="grid grid-cols-3">
+              <div className="grid grid-cols-4">
                 {/* Hardcoded entry for "You" */}
                 <div className="rounded-lg p-2">
                   <span className="font-semibold text-xl">You</span>
@@ -222,7 +222,7 @@ const WaitingArea: React.FC = () => {
           <Button color="red" text="Launch" onClick={handleStartGame} />
         </>
       ) : (
-        <div className="relative md:w-3/5 mt-24 p-6 bg-blue-500 border-r-[2px] border-r-blue-500">
+        <div className="relative md:w-3/5 mt-10 p-6 bg-blue-500 border-r-[2px] border-r-blue-500">
           <h2 className="text-3xl text-white font-sans font-bold mb-4 text-center">
             More rules
           </h2>

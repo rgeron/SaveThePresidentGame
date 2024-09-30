@@ -39,7 +39,7 @@ const CountdownComponent: React.FC<CountdownComponentProps> = ({
   };
 
   return (
-    <div className="bg-blue-500 justify-center text-center py-5 w-3/4 mb-12">
+    <div className="bg-blue-500 justify-center text-center py-5 w-3/4 mb-8">
       <Countdown date={endTime} renderer={renderer} />
     </div>
   );

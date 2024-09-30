@@ -75,7 +75,7 @@ const RoomInfo: React.FC<RoomInfoProps> = ({ roomNumber, players }) => {
       <h2 className=" relative text-5xl font-Montserrat font-bold text-black underline">
         ROOM {roomNumber}
       </h2>
-      <div className="p-2 m-3 bg-blue-600 bg-opacity-80 h-48 w-4/5 rounded-xl ">
+      <div className="p-2 m-3 bg-blue-600 bg-opacity-80 h-48 w-3/4 rounded-xl ">
         <div className="relative h-full">
           {/* Ensure this div takes up remaining space */}
           {players.map((player, index) => (

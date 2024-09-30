@@ -99,8 +99,8 @@ const Preparation: React.FC = () => {
       {/* Pass the fixed players to the RoomInfo component */}
       <RoomInfo roomNumber={currentRoom} players={fixedPlayersInRoom} />
 
-      <div className="w-full max-w-xl mt-5 bg-red-600 text-center rounded-xl">
-        <h1 className="mt-4 text-3xl font-Montserrat font-bold text-white underline">
+      <div className="w-4/5 max-w-xl mt-3 bg-red-600 text-center rounded-xl">
+        <h1 className="mt-4 text-2xl font-Montserrat font-bold text-white underline">
           Rules for {Object.keys(gameData.players).length} players
         </h1>
         <NumberExchangeRule
@@ -108,7 +108,7 @@ const Preparation: React.FC = () => {
         />
       </div>
 
-      <div className=" m-3 rounded-xl underline">
+      <div className=" m-2 rounded-xl underline">
         <h1 className="m-3 text-3xl font-Montserrat font-bold text-black">
           Closely watch your card
         </h1>

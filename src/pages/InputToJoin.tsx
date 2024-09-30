@@ -64,7 +64,7 @@ export default function InputToJoin() {
       </div>
 
       {/* Red Box for Name Input */}
-      <div className="bg-red-600 mt-8 p-3 w-[70%] mx-auto mb-40">
+      <div className="bg-red-600 mt-8 p-3 w-[70%] mx-auto mb-20">
         <input
           type="text"
           value={name}
