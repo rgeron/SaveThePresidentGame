@@ -105,8 +105,7 @@ export default function HomePage() {
           </svg>
 
           <h2 className="text-white font-sans font-semibold text-2xl ml-3">
-            Will the president and the terrorists <br /> end up in the same
-            room?
+            Will the president and the bomber <br /> end up in the same room?
           </h2>
         </div>
       </div>
