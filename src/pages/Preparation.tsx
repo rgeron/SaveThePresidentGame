@@ -21,7 +21,7 @@ interface GameData {
 
 const Preparation: React.FC = () => {
   const { pin } = useParams<{ pin: string }>();
-  const location = useLocation<{ playerKey: string }>();
+  const location = useLocation();
   const { playerKey } = location.state;
   const navigate = useNavigate();
 
