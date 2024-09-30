@@ -49,7 +49,7 @@ export default function InputToJoin() {
     <div className="flex flex-col items-center justify-start h-screen pt-8">
       {/* Blue Section for PIN Input */}
       <div className="bg-blue-600 flex items-center justify-center w-full px-20 py-4 cursor-pointer mt-10 mb-10">
-        <span className="text-white text-8xl font-sans italic font-bold px-2">
+        <span className="text-white text-6xl font-sans italic font-bold px-2">
           #
         </span>
         <input
@@ -58,13 +58,13 @@ export default function InputToJoin() {
           value={pin}
           onChange={(e) => setPin(e.target.value)}
           placeholder=" _ _ _ _ _"
-          className="flex bg-blue-600 text-white text-8xl font-sans font-bold border-none outline-none  placeholder-white placeholder-opacity-70 w-full text-center"
+          className="flex bg-blue-600 text-white text-6xl font-sans font-bold border-none outline-none placeholder-white placeholder-opacity-70 w-full text-center"
           maxLength={5}
         />
       </div>
 
       {/* Red Box for Name Input */}
-      <div className="bg-red-600 mt-8 p-3 w-[70%] mx-auto mb-20">
+      <div className="bg-red-600 mt-8 p-3 w-[70%] mx-auto mb-10">
         <input
           type="text"
           value={name}

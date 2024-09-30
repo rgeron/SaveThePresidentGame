@@ -168,8 +168,8 @@ const Round3: React.FC = () => {
       ) : (
         <div className="flex flex-col items-center w-full h-screen">
           {/* Round 1 Circle */}
-          <div className="relative -top-10 w-52 h-52 bg-red-600 rounded-full flex items-center justify-center">
-            <h1 className="font-sans font-semibold text-white text-4xl mt-2">
+          <div className="relative -top-7 w-52 h-52 bg-red-600 rounded-full flex items-center justify-center">
+            <h1 className="font-sans font-semibold text-white text-4xl mt-4">
               Round 3
             </h1>
           </div>
