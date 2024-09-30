@@ -1,4 +1,4 @@
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebaseConfig";
@@ -40,21 +40,26 @@ const Round1: React.FC = () => {
   useEffect(() => {
     const gameRef = doc(db, "games", pin!);
 
-    const unsubscribe = onSnapshot(gameRef, (snapshot) => {
+    const unsubscribe = onSnapshot(gameRef, async (snapshot) => {
       const data = snapshot.data();
       if (data && data.gameStatus === "round2") {
+        // Fetch the latest game data
+        const latestSnapshot = await getDoc(gameRef);
+        const latestData = latestSnapshot.data() as GameData;
+
+        // Navigate to Round 2 with the latest game data
         navigate(`/round2/${pin}`, {
           state: {
             playerKey,
-            playerData: gameData.players[playerKey],
-            data: gameData,
+            playerData: latestData.players[playerKey], // Use the latest player data
+            data: latestData, // Pass the latest game data
           },
         });
       }
     });
 
     return () => unsubscribe();
-  }, [gameData, pin, playerKey, navigate]);
+  }, [pin, playerKey, navigate]);
 
   const handleCountdownComplete = () => {
     setPause(true);
@@ -160,7 +165,7 @@ const Round1: React.FC = () => {
           </div>
 
           {/* Countdown Timer */}
-          <Countdown onComplete={handleCountdownComplete} duration={180} />
+          <Countdown onComplete={handleCountdownComplete} duration={5} />
 
           {/* Player Card */}
           <div className="mb-10">
