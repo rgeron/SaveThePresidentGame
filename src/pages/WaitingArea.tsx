@@ -92,8 +92,9 @@ const WaitingArea: React.FC = () => {
       let gamblerIndex = -1;
       if (numPlayers % 2 !== 0) {
         gamblerIndex = Math.floor(Math.random() * numPlayers); // Randomly select an index for Gambler
-        const [gamblerKey] = shuffledPlayers.splice(gamblerIndex, 1)[0]; // Remove Gambler from players array
+        const [gamblerKey, gambler] = shuffledPlayers.splice(gamblerIndex, 1)[0]; // Remove Gambler from players array
         updatedPlayers[gamblerKey] = {
+          name: (gambler as Player).name,
           team: "Grey",
           role: "The Gambler",
           Room: [1, 1, 1, 1], // Assign room for Gambler
@@ -106,16 +107,18 @@ const WaitingArea: React.FC = () => {
       const redTeam = shuffledPlayers.slice(half);
 
       // Assign roles to blue team
-      blueTeam.forEach(([key], index) => {
+      blueTeam.forEach(([key, player], index) => {
         updatedPlayers[key] = {
+          name: (player as Player).name,
           team: "Blue",
           role: index === 0 ? "The President" : "Team Member",
         };
       });
 
       // Assign roles to red team
-      redTeam.forEach(([key], index) => {
+      redTeam.forEach(([key, player], index) => {
         updatedPlayers[key] = {
+          name: (player as Player).name,
           team: "Red",
           role: index === 0 ? "The Bomber" : "Team Member",
         };
